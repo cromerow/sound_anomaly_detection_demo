@@ -26,14 +26,13 @@ from sklearn.metrics import f1_score
 # #############################################################################
 # Parameters
 # #############################################################################
-DATASET_FOLDER = "dataset_lite" # folder with samples from each six engines: 
+DATASET_FOLDER = "./dataset_lite" # folder with samples from each six engines: 
                                 # 1. ToyCar (ID)
                                 # 2. ToyConveyor (ID)
                                 # 3. fan (ID)
                                 # 4. pump (ID)
                                 # 5. slider (ID)
                                 # 6. valve (ID)
-MODEL_FOLDER = "models"
 DF = pd.read_feather(DATASET_FOLDER + "/df.feather").drop('label_e', axis=1)
 DF_RES = pd.read_feather(DATASET_FOLDER + "/df_test.feather")
 SCORES = [[82.13, 85.76, 64.57, 86.33, 77.34, 65.28, 77.31, 55.31, 81.49, 
@@ -54,7 +53,7 @@ def main():
              "Méthodologie": page_methodologie,
              "Modélisation": page_modelisation,
              "Prédiction (démo)": page_demo,
-             "Conclusion & Perspectives": page_conclusion}
+             "Conclusion et perspectives": page_conclusion}
     st.sidebar.title("Sound Anomaly Detection")
     st.sidebar.subheader("Menu")
     page = st.sidebar.radio("", tuple(pages.keys()))
@@ -272,7 +271,8 @@ def page_methodologie(state):
                 et un overlap de 50%.")
     st.write(
     "\n\n"
-    "3. Normalisation des données (qui sont centrées réduites)"
+    "3. Normalisation des données (qui sont centrées réduites) par rapport à\
+    l'ensemble Train"
     "\n\n"
     "4. Pour l'usage de l'auto-encodeur, les spectrogrammes sont découpés en\
     frames pour augmenter ses performances.")
@@ -324,13 +324,13 @@ def page_modelisation(state):
         "\n\n"    
         "•	un Dropout avec 20% d'éléments éliminés"
          "\n\n"    
-        "•	une fonction d'activation LeakyReLU ()"
+        "•	une fonction d'activation LeakyReLU"
          "\n\n"    
         "•	une dernière couche dense avec autant de neurones que de classes,\
         à savoir 23.", unsafe_allow_html=True)    
     st.subheader("Entraînement")
-    st.write("On sépare l'ensemble des données Train en un ensemble\
-             d'entrainement, et un autre de validation (20 %)."
+    st.write("On sépare les données Train en un ensemble d'entrainement, et un\
+             ensemble de validation (20 %). "
              "Pour entrainer ce modèle, on utilise 2 callbacks :"
              "\n\n"             
              "•	un EarlyStopping qui stoppe l'entrainement lorsque la fonction\
@@ -356,7 +356,7 @@ def page_modelisation(state):
              les anomalies de notre jeu de données."
              "\n\n"
              "A partir de ce vecteur de dimensions réduites, on met en oeuvre\
-             un algorithme de clustering k-Means. On obtient ainsi un score\
+             un algorithme de clustering k-Means. On obtient ainsi un f1-score\
              moyen de 75 % pour la détection d'anomalie, qui se répartit\
              comme suit :"
              "\n\n" , unsafe_allow_html=True)
@@ -369,7 +369,7 @@ def page_modelisation(state):
     st.header("2. Détection d'anomalie par auto-encodeur convolutif")  
     st.write(
     "Nous utilisons ici un modèle d'auto-encodeur convolutif (inspiré de\
-    [celui-la](https://dcase.community/documents/challenge2020/technical_reports/DCASE2020_Pilastri_86_t2.pdf).\
+    [celui-la](https://dcase.community/documents/challenge2020/technical_reports/DCASE2020_Pilastri_86_t2.pdf)).\
     Le principe de l'auto-encodeur est de compresser les données d'entrée en\
     un vecteur latent de faible dimension (partie encodeur), puis de\
     reconstruire la donnée d'entrée à partir du vecteur latent (partie\
@@ -519,7 +519,7 @@ def page_demo(state):
 # page CONCLUSION
 # #############################################################################
 def page_conclusion(state):
-    st.title("Conclusion & Perspectives")
+    st.title("Conclusion et perspectives")
     st.header("Bilan")
     st.write(
     "L'objectif de ce projet était de détecter des anomalies à partir des\
