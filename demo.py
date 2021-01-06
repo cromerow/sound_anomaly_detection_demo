@@ -85,7 +85,7 @@ def page_dashboard(state):
     des machines."
     "\n\n"
     "Un moyen simple de détecter ou prévenir une panne est d'écouter le bruit\
-    généré par une machine. L'analyse des variations de son fournira les\
+    généré par une machine. L'analyse des variations du son fournira les\
     informations recherchées."
     "\n\n"
     "La prise de son est une chose aisée et peu coûteuse de nos jours.\
@@ -109,8 +109,8 @@ def page_dataset(state):
     accessible sur [kaggle](https://www.kaggle.com/daisukelab/dc2020task2)\
     sous licence Creative Common, et fait 10,12 Go."
     "\n\n"
-    "Les données sont constituées de fichiers au format *.wav séparés en 6\
-    sous-dossiers, un par type de machine :"
+    "Les données sont constituées de fichiers audio au format *.wav séparés en\
+    6 dossiers, un par type de machine :"
     "\n\n"
     "• ToyCar"
     "\n\n"
@@ -125,18 +125,19 @@ def page_dataset(state):
     "• valve"
     "\n\n"
     "Chaque type de machine est représenté par plusieurs machines,\
-    différenciées par un identifiant (ID dans la suite)."
+    différenciées par un identifiant indiqué dans le nom du fichier (ID dans\
+    la suite)."
     "\n\n"
-    "Chaque sous-dossier est divisé en 2 sous-dossiers supplémentaires, Train\
-    et Test.", unsafe_allow_html=True) 
+    "Chaque dossier est divisé en 2 sous-dossiers, Train et Test.", 
+    unsafe_allow_html=True) 
     st.info(
     "Les dossiers Train ne contiennent que des données normales, alors\
-    que les dossiers Test contiennent à la fois des données normales et\
-    anormales.")        
+    que les dossiers Test contiennent à la fois des données normales et des\
+    données anormales.")        
     st.warning(
     "Chaque type de machine est représenté par 4 machines, à l'exception du\
-    ToyConveyor, pour lequel on dispose des enregistrements de 3 machines\
-    seulement, ce qui fait un total de 23 machines différentes.")              
+    ToyConveyor, pour lequel on dispose d'enregistrements de 3 machines\
+    seulement. \n\nCela fait un total de 23 machines différentes.")              
 
 
 # #############################################################################
@@ -147,20 +148,21 @@ def page_analyse(state):
     st.header("Le dataset DCASE 2020 task 2")    
     st.write("\n\n")
     st.write(
-    "Les fichiers audio sont rangés dans un DataFrame, en leur associant des\
-    informations qui peuvent s'avérer intéressantes :")
+    "Les noms des fichiers audio sont rangés dans un DataFrame, et on leur\
+    associe des informations qui peuvent s'avérer intéressantes :"
     "\n\n"
     "• le type de machine (engine)"
     "\n\n"
-    "• l'ensemble auquel elle appartient (dir), train ou test"
+    "• l'ensemble auquel le fichier appartient (dir), train ou test"
     "\n\n"
     "• l'identifiant de la machine (ID)"
     "\n\n"
-    "• la fréquence d'échantillonnage (fs)"
+    "• la fréquence d'échantillonnage en Hz (fs)"
     "\n\n"
-    "• la longueur de l'enregistement (length)"
+    "• la longueur de l'enregistement en secondes (length)"
     "\n\n"
-    "• le label de l'enregistrement (label) : 1 s'il est normal, 0 sinon."
+    "• le label de l'enregistrement (label) : 1 s'il s'agit d'un bruit normal,\
+    0 sinon.")
     st.dataframe(DF.sample(frac=1).reset_index(drop=True).head(10))
     if st.checkbox("Afficher quelques informations complémentaires"):
         info_load_state = st.text('Loading data...')
@@ -169,8 +171,8 @@ def page_analyse(state):
                 d'échantillonnage (16 kHz).")
         st.dataframe(DF[['length',
                          'engine']].groupby(['engine'])['length'].unique())
-        st.warning("On note que les enregistrements du ToyCar durent 11 s,\
-                   alors que tous les autres durent 10 s.")
+        st.warning("On note que tous les enregistrements durent 10 s, à\
+                   l'exception de ceux du ToyCar qui durent 11 s.")
         info_load_state.text("")
     if st.checkbox("Afficher les dimensions "):
         st.write(DF.shape)
@@ -259,7 +261,7 @@ def page_methodologie(state):
     st.header("Préparation des fichiers audio")
     st.write(
     "\n\n"
-    "Pour permettre un meilleure exploitation des fichiers audio par nos\
+    "Pour permettre une meilleure exploitation des fichiers audio par nos\
     différents algorithmes de Deep Learning, il est nécessaire de les préparer\
     ainsi :"
     "\n\n"
@@ -425,9 +427,9 @@ def page_modelisation(state):
              "\n\n"             
              "•	Moyenne baseline : 73.55"
              "\n\n"             
-             "On constate les scores du premier modèle sont globalement\
-             meilleurs, mais que l'auto-encodeur est plus performant sur\
-             certaines machines."
+             "On constate que les scores du premier modèle sont globalement\
+             meilleurs, bien que l'auto-encodeur soit plus performant sur\
+             la plupart des machines."
              "\n\n" , unsafe_allow_html=True)   
     st.info("La baseline est constituée des scores initiaux présentés par les\
             organisateurs du challenge.")
@@ -451,7 +453,7 @@ def page_demo(state):
 
     ID = f.split('_')[2]
     lu = DF_RES[(DF_RES.engine==e) & (DF_RES.ID==ID)].label_e.unique()[0]
-    
+
     # 1. CNN ##################################################################
     st.subheader("Détection d'anomalie par clustering")
     st.warning("Pour pouvoir visualiser les résultats, on effectue une PCA par\
@@ -470,7 +472,7 @@ def page_demo(state):
     plt.scatter(DF_RES[(DF_RES.label_e==lu)&(DF_RES.label==0)].PCA1, 
                 DF_RES[(DF_RES.label_e==lu)&(DF_RES.label==0)].PCA2,
                 alpha=0.6, label='anomalous data')
-    plt.plot(f_pca1, f_pca2, c='g', marker='*', markersize=16, mec='k')
+    plt.plot(f_pca1, f_pca2, c='w', marker='*', markersize=16, mec='k')
     plt.xlabel("PCA 1")
     plt.ylabel("PCA 2")
     plt.title("Représentation de la PCA - ROC-AUC : {:.2f}%".format(scores[lu]))
@@ -495,7 +497,7 @@ def page_demo(state):
     fig = plt.figure(figsize=(10,6))
     plt.hist(mse[labels], bins=50, alpha=0.6, label='normal loss')
     plt.hist(mse[~labels], bins=50, alpha=0.6, label='anomalous loss')
-    plt.plot(f_mse, 2, c='g', marker='*', markersize=16, mec='k')
+    plt.plot(f_mse, 2, c='w', marker='*', markersize=16, mec='k')
     plt.xlabel("MSE")
     plt.ylabel("Nombre d'observations")
     plt.title("Répartition de l'erreur - ROC-AUC : {:.2f}%".format(scores[lu]))
