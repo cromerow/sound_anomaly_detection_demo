@@ -159,7 +159,7 @@ def page_analyse(state):
     "\n\n"
     "• la fréquence d'échantillonnage en Hz (fs)"
     "\n\n"
-    "• la longueur de l'enregistement en secondes (length)"
+    "• la durée de l'enregistement en secondes (length)"
     "\n\n"
     "• le label de l'enregistrement (label) : 1 s'il s'agit d'un bruit normal,\
     0 sinon.")
@@ -457,7 +457,7 @@ def page_demo(state):
     # 1. CNN ##################################################################
     st.subheader("Détection d'anomalie par clustering")
     st.warning("Pour pouvoir visualiser les résultats, on effectue une PCA par\
-               laquelle le problème est ramené à 2 dimensions."
+               laquelle le problème est ramené à 2 dimensions.\n\n"
                "Ces résultats sont très proches de ceux obtenus par k-Means.")
 
     scores = SCORES[1]
