@@ -10,7 +10,7 @@ Created on Mon Dec 28 11:53:21 2020
 # DataScientest.com
 #
 # Owners:
-# Abel TRAORE 
+# Abel TRAORE (https://www.linkedin.com/in/abel-traore-a867191b5/)
 # Clément ROMEROWSKI (https://www.linkedin.com/in/clément-romerowski-33798443/)
 # #############################################################################
 
