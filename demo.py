@@ -214,7 +214,7 @@ def page_transformation(state):
     st.write("\n\n")
     st.write(
     "Cette représentation est obtenue en appliquant des FFT sur des fenêtres\
-    temporelles de petites tailles (de l'ordre de 30ms), et reflètent\
+    temporelles de petites tailles (de l'ordre de 30ms), et reflète\
     directement les variations fréquentielles en fonction du temps.")
     splot_load_state = st.text('Loading plot...')
     fig_sp, s_sp = fct.plot_Spectrogram(f)
