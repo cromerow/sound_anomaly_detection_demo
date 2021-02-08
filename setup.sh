@@ -1,3 +1,5 @@
+heroku buildpacks:add --index 1 heroku-community/apt
+
 mkdir -p ~/.streamlit/
 
 echo "\
