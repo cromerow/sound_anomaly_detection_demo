@@ -93,7 +93,7 @@ def page_dashboard(state):
     nous nous intéressons dans ce projet."
     "\n\n"
     "Le repo github complet est disponible [ici]\
-    (https://github.com/DataScientest/Sound-Anomaly-Detection).", 
+    (https://github.com/cromerow/sound_anomaly_detection_demo).", 
     unsafe_allow_html=True)  
 
 
@@ -371,7 +371,7 @@ def page_modelisation(state):
     st.header("2. Détection d'anomalie par auto-encodeur convolutif")  
     st.write(
     "Nous utilisons ici un modèle d'auto-encodeur convolutif (inspiré de\
-    [celui-la](https://dcase.community/documents/challenge2020/technical_reports/DCASE2020_Pilastri_86_t2.pdf)).\
+    [celui-là](https://dcase.community/documents/challenge2020/technical_reports/DCASE2020_Pilastri_86_t2.pdf)).\
     Le principe de l'auto-encodeur est de compresser les données d'entrée en\
     un vecteur latent de faible dimension (partie encodeur), puis de\
     reconstruire la donnée d'entrée à partir du vecteur latent (partie\
